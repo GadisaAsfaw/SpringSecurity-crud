@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:replace="~{/fragments/layout :: layout(~{::title},~{::section})}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<section>
+    <div class="panel-heading">
+	<h1>Welcome(<a th:href="@{/user/detail/{id}(id=${user.id})}"><span th:utext="${user.username}"></span></a>)</h1>
+	</div>
+      
+		  <div sec:authorize="hasAuthority('EMP')">
+		   <h3>Hello You can click on your name to access your Profile</h3> 
+		  </div>
+		  <!-- 
+		  //////////////////////////////comment
+		  -->
+	<div sec:authorize="hasAuthority('ADMIN')" th:switch="${users}">
+    <h2 th:case="null">No users yet!</h2>
+        <div th:case="*" >
+            <h2>Employers</h2>
+            <table class="table table-hover bg-light">
+            <caption>List of employers</caption>
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Edit</th>
+                        <th>Detail</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}"  th:if=${user.id!=1}>
+         
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td ><a th:href="@{/user/edit/{id}(id=${user.id})}">Edit</a></td>
+                    <td ><a th:href="@{/user/detail/{id}(id=${user.id})}">Detail</a></td>
+                    <td ><a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>      
+    <p><a href="/registration">Add a new user</a></p>
+</div>
+
+
+  
+</section>
+</body>
+</html>

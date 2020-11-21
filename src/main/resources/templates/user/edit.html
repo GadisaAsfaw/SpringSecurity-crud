@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:replace="~{fragments/layout :: layout(~{::title},~{::section})}">
+<head>
+    <title>Update</title>
+</head>
+<body>
+<section>
+<div class="row">
+			<div class="col-md-6 col-md-offset-3 card bg-light">
+				<form autocomplete="off" action="#" th:action="@{/user/update}"
+					th:object="${user}" method="post" class="form-horizontal"
+					role="form">
+					<input style="visibility:hidden" type="text" th:field="*{id}"
+						  /> 
+					<h2>Profile update</h2>
+					<div class="form-group">
+						<div class="col-sm-9">
+						    <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+								class="validation-message"></label>
+							<input type="text" th:field="*{username}"
+								placeholder="User Name" class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+						    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="validation-message"></label>
+							<input type="text" th:field="*{email}"
+								placeholder="Email" class="form-control" /> 
+						</div>
+					</div>
+						
+						
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Update</button>
+						</div>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+					
+				
+				</form>
+				
+			</div>
+		</div>
+		   <p><a  th:href="@{/user/home}">Back</a></p>
+</section>
+</body>
+</html>
